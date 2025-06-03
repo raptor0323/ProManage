@@ -1,0 +1,53 @@
+Old Details
+{% extends 'core/base.html' %}
+
+{% block title %}{{ lead.name }}{% endblock %}
+
+{% block content %}
+    <div class="py-6 px-6">
+        <h1 class="mb-4 text-xl">{{ lead.name }}</h1>
+        
+        <table class="table-fixed w-full">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">Field</th>
+                    <th class="px-4 py-2">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if lead.address %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Address</td>
+                    <td class="border px-4 py-2">{{ lead.address }}</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Priority</td>
+                    <td class="border px-4 py-2">{{ lead.get_priority_display }}</td>
+                </tr>
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Gender</td>
+                    <td class="border px-4 py-2">{{ lead.get_gender_display }}</td>
+                </tr>
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Created at</td>
+                    <td class="border px-4 py-2">{{ lead.created_at }}</td>
+                </tr>
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Modified at</td>
+                    <td class="border px-4 py-2">{{ lead.modified_at }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr class="my-4">
+
+        <a href="{% url 'leads_convert' lead.id %}" class="py-2 px-4 rounded-xl bg-blue-500 text-white">Convert to admission</a>
+        <a href="{% url 'leads_edit' lead.id %}" class="py-2 px-4 rounded-xl bg-teal-500 text-white">Edit</a>
+        <a href="{% url 'leads_delete' lead.id %}" class="py-2 px-4 rounded-xl bg-red-500 text-white">Delete</a>
+
+        <hr class="my-4">
+
+        <a href="{% url 'leads_list' %}">Back to Enquiries</a>
+    </div>
+{% endblock %}
