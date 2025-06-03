@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+
+
+{% block title %}Add Equiry{% endblock %}
+
+{% block extra_css %}
+<style>
+.horizontal-checkboxes li {
+    display: inline-block;
+    margin-right: 15px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="py-6 px-6 "> 
+        <h1 class = "text-xl">Add Equiry</h1>
+
+        <form method="post" action=".">
+            {% csrf_token %}
+
+            {{ form.as_p}}
+
+
+            <button class = "py-4 px-8 bg-teal-500 text-white rounded-xl">Submit</button>
+        </form>
+    </div>
+{% endblock %}
