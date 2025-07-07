@@ -1,15 +1,81 @@
 {% extends 'core/base.html' %}
 
-
 {% block title %}Sign up{% endblock %}
 
 {% block content %}
-   <h1 class = "text-lg">Sign up</h1>
-   <form method = "post" action = ".">
-        {% csrf_token %}
-
-        {{ form.as_p }}
-
-        <button class = "py-4 px-8 bg-teal-500 text-white rounded-xl">Submit</button>
-   </form>
+<style>
+    body {
+        background: #f3f4f6;
+        font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    }
+    .signup-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .signup-card {
+        background: #fff;
+        padding: 2.5rem 2rem;
+        border-radius: 1.25rem;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        width: 100%;
+        max-width: 400px;
+    }
+    .signup-card h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: #0f766e;
+        text-align: center;
+    }
+    .signup-card form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+    .signup-card input[type="text"],
+    .signup-card input[type="password"],
+    .signup-card input[type="email"] {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        background: #f9fafb;
+        transition: border 0.2s;
+    }
+    .signup-card input[type="text"]:focus,
+    .signup-card input[type="password"]:focus,
+    .signup-card input[type="email"]:focus {
+        border: 1.5px solid #0d9488;
+        outline: none;
+        background: #fff;
+    }
+    .signup-card button {
+        padding: 0.75rem 0;
+        background: linear-gradient(90deg, #14b8a6 0%, #0ea5e9 100%);
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin-top: 0.5rem;
+    }
+    .signup-card button:hover {
+        background: linear-gradient(90deg, #0ea5e9 0%, #14b8a6 100%);
+    }
+</style>
+<div class="signup-container">
+    <div class="signup-card">
+        <h1>Sign up</h1>
+        <form method="post" action=".">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
