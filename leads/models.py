@@ -3,39 +3,15 @@ from django.contrib.auth.models import User
 from multiselectfield import MultiSelectField
 
 class Lead(models.Model):
-    COLD = 'Cold'
-    WARM = 'Warm'
-    HOT = 'Hot'
-
-    CHOICES_PRIORITY = (
-        (COLD,'Cold'),
-        (WARM, 'Warm'),
-        (HOT, 'Hot')
-    )
-
-    # NEW = 'new'
-    # CONTACTED = 'contacted'
-    # WON = 'won'
-    # LOST = 'LOST'
-
-    # CHOICES_STATUS =(
-    #     (NEW , 'New'),
-    #     (CONTACTED , 'Contacted'),
-    #     (WON, 'Won'),
-    #     (LOST, 'Lost'),
-    # )
-    NA = 'Select'
     MALE = 'Male'
     FEMALE = 'Female'
     OTHER = 'Other'
 
     GENDER =(
-        (NA, 'Select'),
         (MALE, 'Male'),
         (FEMALE, 'Female'),
         (OTHER, 'Other')
     )
-
 
     JD = 'Just Dial'
     SM = 'Social Media'
@@ -50,6 +26,26 @@ class Lead(models.Model):
         (reference , 'Referral'),
         (EW , 'Event / Workshop'),
     )
+    COLD = 'Cold'
+    WARM = 'Warm'
+    HOT = 'Hot'
+    CHOICES_PRIORITY = (
+        (COLD, 'Cold'),
+        (WARM, 'Warm'),
+        (HOT, 'Hot'),
+    )
+     # facalty 
+    NA = 'SELECT'
+    Mrunal_Mam = "Mrunal_Mam"
+    Ankita_Mam = "Ankita_Mam"
+    Chaitany_Sir = 'Chaitany_Sir'
+    Dnyanda_Mam = 'Dnyanda_Mam '
+    facalty_via = (
+        (Mrunal_Mam,"Mrunal_Mam"),
+        (Ankita_Mam,"Ankita_Mam"),
+        (Chaitany_Sir,'Chaitany_Sir'),
+        (Dnyanda_Mam,'Dnyanda_Mam ')
+        )
 
     MSOffice = 'MS-Office'
     Hardware = 'Hardware'
@@ -100,14 +96,7 @@ class Lead(models.Model):
         (LANG_HINDI, 'Hindi'),
         (LANG_MARATHI, 'Marathi'),
     )
-    
 
-
-    
-    
-
-
-    
     name = models.CharField(max_length = 255)
     father_name = models.CharField(max_length = 255, blank = True, null=True)
     mother_name = models.CharField(max_length = 255, blank = True, null=True)
@@ -117,10 +106,11 @@ class Lead(models.Model):
     academic_qualification = models.CharField(max_length=255, blank=True, null=True)
     mobile_no = models.CharField(max_length=15, blank=True, null=True)
     known_languages = MultiSelectField(choices=KNOWN_LANGUAGES_CHOICES, blank=True, null=True)
-    priority = models.CharField(max_length=10, choices=  CHOICES_PRIORITY, default= WARM)
+    priority = models.CharField(max_length=100, choices=CHOICES_PRIORITY, default=WARM)
     gender = models.CharField(max_length=20, choices=GENDER, default=NA)
     enquiry_via = models.CharField(max_length=100, choices= enquiry_via, default= Google)
     courses_interested = MultiSelectField(choices=COURSE_CHOICES, blank=True, null=True)
+    facalty = models.CharField(max_length=100, choices=facalty_via, default=NA)
     converted_to_admission = models.BooleanField(default = False)
     created_by = models.ForeignKey(User, related_name='leads', on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

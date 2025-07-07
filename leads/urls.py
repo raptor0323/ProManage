@@ -9,4 +9,5 @@ urlpatterns = [
     path('<int:pk>/edit/', views.leads_edit, name='leads_edit'),
     path('<int:pk>/convert/', views.convert_to_admission, name='leads_convert'),
     path('add_lead/', views.add_lead, name = 'add_lead'),
+    
 ]
