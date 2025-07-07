@@ -1,19 +1,374 @@
 {% extends 'core/base.html' %}
 
-
 {% block title %}Edit Enquiry{% endblock %}
 
 {% block content %}
-    <div class="py-6 px-6 "> 
-        <h1 class = "text-xl">Edit Enquiry</h1>
+<div class="max-w-[1200px] mx-auto py-16 px-12 bg-white rounded-3xl shadow-lg">
+  <h1 class="text-[52px] font-extrabold tracking-tight text-gray-900 mb-14 text-center font-sans leading-tight select-none" style="letter-spacing: -0.03em; font-family: 'Poppins', sans-serif;">
+    Edit Enquiry
+  </h1>
 
-        <form method="post" action=".">
-            {% csrf_token %}
-
-            {{ form.as_p}}
-
-
-            <button class = "py-4 px-8 bg-teal-500 text-white rounded-xl">Submit</button>
-        </form>
+   <div class="max-w-[1200px] mx-auto py-10 px-8 bg-white rounded-3xl shadow-lg relative">
+  <!-- Toast here -->
+  <!-- Move toast from top to fixed bottom center -->
+    <div id="toast"
+        class="hidden fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-6 py-4 rounded-lg shadow-lg text-sm font-semibold transition-opacity duration-300 z-50">
+      Please fill all required fields.
     </div>
+
+  <div class="mb-10 flex flex-wrap justify-center gap-4">
+    <button type="button" class="heading-btn active-step" onclick="showStep(0, this)">Registration</button>
+    <button type="button" class="heading-btn" onclick="showStep(1, this)">Academic Qualification</button>
+    <button type="button" class="heading-btn" onclick="showStep(2, this)">Other</button>
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+    {% if form.errors %}
+      <div class="text-red-700 bg-red-50 border border-red-300 rounded-lg p-5 mb-10 shadow-sm">
+        <ul class="list-disc  list-inside space-y-1 text-base font-medium">
+          {% for field in form %}
+            {% for error in field.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <!-- Progress Bar -->
+    <div class="w-full max-w-xl mx-auto mb-12">
+      <div class="w-full bg-gray-200 rounded-full h-5 overflow-hidden">
+        <div id="linearProgressBar" class="bg-indigo-600 h-full transition-all duration-300 ease-in-out" style="width: 0%;"></div>
+      </div>
+      <div class="text-center mt-2 text-gray-700 font-semibold text-lg">
+        <span id="progressPercentText">0%</span> <br />
+        <span id="stepText">Step 1 of 3</span>
+      </div>
+    </div>
+
+
+
+    <!-- Step 1: Registration -->
+      <div class="form-step">
+        <!-- Name -->
+      <div class="mb-8">
+      <label class="block text-xl font-semibold text-gray-700 mb-3" for="{{ form.name.id_for_label }}">Name</label>
+      <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}"
+           value="{{ form.name.value|default_if_none:'' }}"
+           required
+           class="w-full py-4 px-6 rounded-xl border border-gray-300 bg-white text-lg text-gray-900 focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:border-indigo-500 shadow-sm transition">
+    </div>
+
+  <!-- Father Name -->
+  <div class="mb-8">
+    <label class="block text-xl font-semibold text-gray-700 mb-3" for="{{ form.father_name.id_for_label }}">Father Name</label>
+    <input type="text" name="{{ form.father_name.name }}" id="{{ form.father_name.id_for_label }}"
+           value="{{ form.father_name.value|default_if_none:'' }}"
+           required
+           class="w-full py-4 px-6 rounded-xl border border-gray-300 bg-white text-lg text-gray-900 focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:border-indigo-500 shadow-sm transition">
+  </div>
+
+  <!-- Mother Name -->
+  <div class="mb-8">
+    <label class="block text-xl font-semibold text-gray-700 mb-3" for="{{ form.mother_name.id_for_label }}">Mother Name</label>
+    <input type="text" name="{{ form.mother_name.name }}" id="{{ form.mother_name.id_for_label }}"
+           value="{{ form.mother_name.value|default_if_none:'' }}"
+           required
+           class="w-full py-4 px-6 rounded-xl border border-gray-300 bg-white text-lg text-gray-900 focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:border-indigo-500 shadow-sm transition">
+  </div>
+
+  <!-- Date of Birth -->
+    <div>
+  <label for="{{ form.date_of_birth.id_for_label }}" class="block text-xl font-semibold text-gray-700 mb-3">Date of Birth</label>
+  <input
+    type="date"
+    name="{{ form.date_of_birth.name }}"
+    id="{{ form.date_of_birth.id_for_label }}"
+    class="w-full rounded-xl border border-gray-300 bg-gray-50 py-4 px-6 text-gray-900 text-lg placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:border-indigo-500 transition shadow-sm"
+    value="{{ form.date_of_birth.value|date:'Y-m-d' }}"
+    required
+    aria-label="Date of Birth"
+      >
+    </div>
+  
+  <!-- Gender -->
+  <div class="mb-8">
+    <label class="block text-xl font-semibold text-gray-700 mb-3" for="{{ form.gender.id_for_label }}">Gender</label>
+    <select name="{{ form.gender.name }}" id="{{ form.gender.id_for_label }}"
+      required
+      class="w-full py-4 px-6 rounded-xl border border-gray-300 bg-white text-lg text-gray-900 focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:border-indigo-500 shadow-sm transition">
+      <option value="">Select gender</option>
+      {% for choice in form.gender.field.choices %}
+        <option value="{{ choice.0 }}" {% if choice.0 == form.gender.value %}selected{% endif %}>{{ choice.1 }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- Email -->
+  <div class="mb-8">
+    <label class="block text-xl font-semibold text-gray-700 mb-3" for="{{ form.email.id_for_label }}">Email</label>
+    <input type="email" name="{{ form.email.name }}" id="{{ form.email.id_for_label }}"
+           value="{{ form.email.value|default_if_none:'' }}"
+           required
+           placeholder="example@email.com"
+           class="w-full py-4 px-6 rounded-xl border border-gray-300 bg-white text-lg text-gray-900 focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:border-indigo-500 shadow-sm transition">
+  </div>
+
+  <!-- Address -->
+  <div class="mb-8">
+    <label class="block text-xl font-semibold text-gray-700 mb-3" for="{{ form.address.id_for_label }}">Address</label>
+    <textarea name="{{ form.address.name }}" id="{{ form.address.id_for_label }}"
+              required
+              class="w-full py-4 px-6 rounded-xl border border-gray-300 bg-white text-lg text-gray-900 focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:border-indigo-500 shadow-sm transition"
+              rows="3">{{ form.address.value|default_if_none:'' }}</textarea>
+  </div>
+
+  <!-- Mobile No -->
+  <div class="mb-8">
+    <label class="block text-xl font-semibold text-gray-700 mb-3" for="{{ form.mobile_no.id_for_label }}">Mobile No</label>
+    <input type="tel" name="{{ form.mobile_no.name }}" id="{{ form.mobile_no.id_for_label }}"
+           value="{{ form.mobile_no.value|default_if_none:'' }}"
+           required
+           placeholder="Enter Your Number"
+           class="w-full py-4 px-6 rounded-xl border border-gray-300 bg-white text-lg text-gray-900 focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:border-indigo-500 shadow-sm transition">
+  </div>
+</div>
+
+    <!-- Step 2: Academic Qualification -->
+    <div class="form-step hidden">
+      <div class="mb-8">
+        <label class="block text-xl font-semibold text-gray-700 mb-3" for="{{ form.academic_qualification.id_for_label }}">Academic Qualification</label>
+        <input type="text" name="{{ form.academic_qualification.name }}" id="{{ form.academic_qualification.id_for_label }}"
+               value="{{ form.academic_qualification.value|default_if_none:'' }}"
+               required
+               class="w-full py-4 px-6 rounded-xl border border-gray-300 bg-white text-lg text-gray-900 focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:border-indigo-500 shadow-sm transition">
+      </div>
+
+      <div class="mb-8">
+        <label class="block text-xl font-semibold text-gray-700 mb-3">Courses Interested</label>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 -mt-2">
+          {% for choice in form.courses_interested.field.choices %}
+            <label class="flex items-center cursor-pointer select-none">
+              <input
+                type="checkbox"
+                name="{{ form.courses_interested.name }}"
+                value="{{ choice.0 }}"
+                class="h-5 w-5 rounded-md border border-gray-300 bg-white text-indigo-600 focus:ring-2 focus:ring-indigo-400 transition cursor-pointer"
+                {% if choice.0 in form.courses_interested.value %}checked{% endif %}>
+              <span class="ml-3 text-gray-800 font-medium">{{ choice.1 }}</span>
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+<!-- Step 3: Other -->
+    <div class="form-step hidden">
+      <div class="mb-8">
+        <label class="block text-xl font-semibold text-gray-700 mb-3">Known Languages</label>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 -mt-2">
+          {% for choice in form.known_languages.field.choices %}
+            <label class="flex items-center cursor-pointer select-none">
+              <input
+                type="checkbox"
+                name="{{ form.known_languages.name }}"
+                value="{{ choice.0 }}"
+                class="h-5 w-5 rounded-md border border-gray-300 bg-white text-indigo-600 focus:ring-2 focus:ring-indigo-400 transition cursor-pointer"
+                {% if choice.0 in form.known_languages.value %}checked{% endif %}>
+              <span class="ml-3 text-gray-800 font-medium">{{ choice.1 }}</span>
+            </label>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="mb-8">
+        <label class="block text-xl font-semibold text-gray-700 mb-3" for="{{ form.enquiry_via.id_for_label }}">How did you hear about us?</label>
+        <select name="{{ form.enquiry_via.name }}" id="{{ form.enquiry_via.id_for_label }}"
+                required
+                class="w-full rounded-xl border border-gray-300 bg-gray-50 py-4 px-6 text-gray-900 text-lg focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:border-indigo-500 transition shadow-sm">
+          <option value="">Select source</option>
+          {% for choice in form.enquiry_via.field.choices %}
+            <option value="{{ choice.0 }}" {% if choice.0 == form.enquiry_via.value %}selected{% endif %}>{{ choice.1 }}</option>
+
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="mb-8">
+        <label class="block text-xl font-semibold text-gray-700 mb-3" for="{{ form.priority.id_for_label }}">Priority</label>
+        <select name="{{ form.priority.name }}" id="{{ form.priority.id_for_label }}"
+                required
+                class="w-full rounded-xl border border-gray-300 bg-gray-50 py-4 px-6 text-gray-900 text-lg focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:border-indigo-500 transition shadow-sm">
+          <option value="">Select priority</option>
+          {% for choice in form.priority.field.choices %}
+            <option value="{{ choice.0 }}" {% if choice.0 == form.priority.value %}selected{% endif %}>{{ choice.1 }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="mb-8">
+        <label class="block text-xl font-semibold text-gray-700 mb-3" for="{{ form.facalty.id_for_label }}">Faculty</label>
+       <select name="{{ form.facalty.name }}" id="{{ form.facalty.id_for_label }}"
+        required
+        class="w-full rounded-xl border border-gray-300 bg-gray-50 py-4 px-6 text-gray-900 text-lg focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:border-indigo-500 transition shadow-sm">
+          <option value="">Select faculty</option>
+        {% for choice in form.facalty.field.choices %}
+        <option value="{{ choice.0 }}" {% if choice.0 == form.facalty.value %}selected{% endif %}>{{ choice.1 }}</option>
+        {% endfor %}
+      </select>
+      </div>
+    </div>
+
+   <!-- Navigation Buttons -->
+  <div class="mt-12 flex justify-center gap-6">
+      <button type="button" onclick="changeStep(-1)" class="back-btn hidden bg-gray-300 text-gray-800 px-6 py-3 rounded-xl font-semibold hover:bg-gray-400 transition">Back</button>
+      <button type="button" onclick="changeStep(1)" class="next-btn bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">Next</button>
+    </div>
+
+    <!-- Update and Cancel Buttons -->
+    <div class="mt-12 flex justify-between">
+      <a
+        href="{% url 'admission_list' %}"
+        class="px-8 py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 text-lg font-semibold rounded-xl border border-gray-300 shadow-sm transition focus:outline-none focus:ring-4 focus:ring-gray-300"
+      >
+        Cancel
+      </a>
+      <button
+        type="submit"
+        class="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-semibold rounded-xl shadow-md transition focus:outline-none focus:ring-4 focus:ring-indigo-300"
+      >
+        Update
+      </button>
+    </div>
+        </div>
+      </form>
+    </div>
+
+    
+    <!-- Styles -->
+<style>
+  .heading-btn {
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #4e54c8;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+  }
+  .heading-btn:hover {
+    background-color: #d3d4db;
+  }
+  .form-step {
+    display: none;
+  }
+  .form-step:first-of-type {
+    display: block;
+  }
+  .active-step {
+    background-color: #1fa304 !important;
+  }
+  
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let currentStep = 0;
+    const steps = document.querySelectorAll('.form-step');
+    const nextBtn = document.querySelector('.next-btn');
+    const backBtn = document.querySelector('.back-btn');
+    const tabButtons = document.querySelectorAll('.heading-btn');
+    const submitButton = document.querySelector('button[type="submit"]');
+
+    function updateProgressBar() {
+      const progressBar = document.getElementById('linearProgressBar');
+      const progressLabel = document.getElementById('progressPercentText');
+      const percent = Math.round(((currentStep + 1) / steps.length) * 100);
+      progressBar.style.width = `${percent}%`;
+      progressLabel.innerText = `${percent}%`;
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.remove('hidden');
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+
+    function validateStep(stepIndex) {
+      const step = steps[stepIndex];
+      const inputs = step.querySelectorAll('input, select, textarea');
+      for (const input of inputs) {
+        if (input.required && !input.value.trim()) {
+          input.classList.add('border-red-500');
+          const label = step.querySelector(`label[for="${input.id}"]`);
+          const labelText = label ? label.innerText : input.name;
+          showToast(`Please fill the "${labelText}" field.`);
+          input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          input.focus();
+          return false;
+        } else {
+          input.classList.remove('border-red-500');
+        }
+      }
+      return true;
+    }
+
+    function updateFormUI() {
+      steps.forEach((step, idx) => {
+        step.style.display = idx === currentStep ? 'block' : 'none';
+      });
+
+      backBtn.classList.toggle('hidden', currentStep === 0);
+      nextBtn.classList.toggle('hidden', currentStep === steps.length - 1);
+      submitButton.classList.toggle('hidden', currentStep !== steps.length - 1);
+
+      tabButtons.forEach((btn, idx) => {
+        btn.classList.toggle('active-step', idx === currentStep);
+      });
+
+      // Update progress bar
+      updateProgressBar();
+
+      // ✅ Update step text safely
+      const stepText = document.getElementById('stepText');
+      if (stepText) {
+        stepText.innerText = `Step ${currentStep + 1} of ${steps.length}`;
+      }
+    }
+    // Final submission validation
+    document.querySelector('form').addEventListener('submit', function (e) {
+      if (!validateStep(currentStep)) {
+        e.preventDefault();
+        showToast("Please complete all required fields in this step.");
+      }
+    });
+
+    window.changeStep = function (stepChange) {
+      if (stepChange > 0 && !validateStep(currentStep)) return;
+
+      const newStep = currentStep + stepChange;
+      if (newStep >= 0 && newStep < steps.length) {
+        currentStep = newStep;
+        updateFormUI();
+      }
+    };
+
+    window.showStep = function (stepIndex, button) {
+      if (!validateStep(currentStep)) return;
+      currentStep = stepIndex;
+      updateFormUI();
+    };
+
+    // Start by showing the right step and progress
+    updateFormUI();
+  });
+</script>
 {% endblock %}

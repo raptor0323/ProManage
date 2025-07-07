@@ -3,142 +3,129 @@
 {% block title %}{{ admission.name }}{% endblock %}
 
 {% block content %}
-    <div class="py-6 px-6 "> 
-        <h1 class = "mb-4 text-xl">{{ admission.name }}</h1>
-
-        {% if admission.description %}
-            <p class="font-semibold">Description</p>
-            <p class="mb-2">{{ admission.description}}</p>
-        {% endif %}
-
-        <p class="font-semibold">Created at</p>
-        <p class="mb-2">{{ admission.created_at }}</p>
-
-        <p class="font-semibold">Modified at</p>
-        <p class="mb-6">{{ admission.modified_at }}</p>
+    <div class="py-6 px-6">
+        <h1 class="mb-4 text-xl">{{ admission.name }}</h1>
+        
+        <table class="table-fixed w-full">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">Field</th>
+                    <th class="px-4 py-2">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if admission.name %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Name</td>
+                    <td class="border px-4 py-2">{{ admission.name }}</td>
+                </tr>
+                {% endif %}
+                {% if admission.father_name %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Father Name</td>
+                    <td class="border px-4 py-2">{{ admission.father_name }}</td>
+                </tr>
+                {% endif %}
+                {% if admission.mother_name %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Mother Name</td>
+                    <td class="border px-4 py-2">{{ admission.mother_name }}</td>
+                </tr>
+                {% endif %}
+                {% if admission.date_of_birth %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Date of Birth</td>
+                    <td class="border px-4 py-2">{{ admission.date_of_birth }}</td>
+                </tr>
+                {% endif %}
+                 {% if admission.gender %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Gender</td>
+                    <td class="border px-4 py-2">{{ admission.get_gender_display }}</td>
+                </tr>
+                {% endif %}
+                {% if admission.email %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Email</td>
+                    <td class="border px-4 py-2">{{ admission.email }}</td>
+                </tr>
+                {% endif %}
+                {% if admission.address %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Address</td>
+                    <td class="border px-4 py-2">{{ admission.address }}</td>
+                </tr>
+                {% endif %}
+                {% if admission.courses_interested %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Courses Interested</td>
+                    <td class="border px-4 py-2">{{ admission.courses_interested }}</td>
+                </tr>
+                {% endif %}
+                {% if admission.academic_qualification %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Academic Qualification</td>
+                    <td class="border px-4 py-2">{{ admission.academic_qualification }}</td>
+                </tr>
+                {% endif %}
+                {% if admission.mobile_no %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Mobile Number</td>
+                    <td class="border px-4 py-2">{{ admission.mobile_no }}</td>
+                </tr>
+                {% endif %}
+                {% if admission.known_languages %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Known Languages</td>
+                    <td class="border px-4 py-2">{{ admission.known_languages }}</td>
+                </tr>
+                {% endif %}
+                {% if admission.enquiry_via %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Enquiry Via</td>
+                    <td class="border px-4 py-2">{{ admission.enquiry_via }}</td>
+                </tr>
+                {% endif %}
+                {% if admission.priority %}
+                <tr>
+                <td class="border px-4 py-2 font-semibold">Priority</td>
+                <td class="border px-4 py-2">{{ admission.priority }}</td>
+                </tr>
+                {% endif %}
+                {% if admission.facalty %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Facatly Name</td>
+                    <td class="border px-4 py-2">{{ admission.facalty }}</td>
+                </tr>
+                {% endif %}
+                {% if admission.created_by %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Created By</td>
+                    <td class="border px-4 py-2">{{ admission.created_by }}</td>
+                </tr>
+                {% endif %}
+                {% if admission.created_at %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Created At</td>
+                    <td class="border px-4 py-2">{{ admission.created_at }}</td>
+                </tr>
+                {% endif %}
+                {% if admission.modified_at %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Modified At</td>
+                    <td class="border px-4 py-2">{{ admission.modified_at }}</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
 
         <hr class="my-4">
 
-
-        <a href="#" class="py-2 px-4 rounded-xl  bg-teal-500 text-white">Edit</a>
-        <a href="#" class="py-2 px-4 rounded-xl bg-red-500 text-white">Delete</a>
+        <a href="{% url 'admission_edit' admission.id %}" class="py-2 px-4 rounded-xl bg-teal-500 text-white">Edit</a>
+        <a href="{% url 'admission_delete' admission.id %}" class="py-2 px-4 rounded-xl bg-red-500 text-white">Delete</a>
 
         <hr class="my-4">
 
-        <a href="{% url 'admission_list' %}">Back to Admissions</a>
+        <a href="{% url 'admission_list' %}">Back to Admission</a>
     </div>
 {% endblock %}
-
-
-<table class="table-fixed w-full">
-    <thead>
-        <tr>
-            <th class="px-4 py-2">Field</th>
-            <th class="px-4 py-2">Details</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% if lead.name %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Name</td>
-            <td class="border px-4 py-2">{{ lead.name }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.father_name %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Father Name</td>
-            <td class="border px-4 py-2">{{ lead.father_name }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.mother_name %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Mother Name</td>
-            <td class="border px-4 py-2">{{ lead.mother_name }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.email %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Email</td>
-            <td class="border px-4 py-2">{{ lead.email }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.address %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Address</td>
-            <td class="border px-4 py-2">{{ lead.address }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.date_of_birth %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Date of Birth</td>
-            <td class="border px-4 py-2">{{ lead.date_of_birth }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.academic_qualification %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Academic Qualification</td>
-            <td class="border px-4 py-2">{{ lead.academic_qualification }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.mobile_no %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Mobile Number</td>
-            <td class="border px-4 py-2">{{ lead.mobile_no }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.known_languages %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Known Languages</td>
-            <td class="border px-4 py-2">{{ lead.known_languages }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.priority %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Priority</td>
-            <td class="border px-4 py-2">{{ lead.get_priority_display }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.gender %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Gender</td>
-            <td class="border px-4 py-2">{{ lead.get_gender_display }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.enquiry_via %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Enquiry Via</td>
-            <td class="border px-4 py-2">{{ lead.enquiry_via }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.courses_interested %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Courses Interested</td>
-            <td class="border px-4 py-2">{{ lead.courses_interested }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.converted_to_admission %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Converted to Admission</td>
-            <td class="border px-4 py-2">{{ lead.converted_to_admission }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.created_by %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Created By</td>
-            <td class="border px-4 py-2">{{ lead.created_by }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.created_at %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Created At</td>
-            <td class="border px-4 py-2">{{ lead.created_at }}</td>
-        </tr>
-        {% endif %}
-        {% if lead.modified_at %}
-        <tr>
-            <td class="border px-4 py-2 font-semibold">Modified At</td>
-            <td class="border px-4 py-2">{{ lead.modified_at }}</td>
-        </tr>
-        {% endif %}
-    </tbody>
-</table>

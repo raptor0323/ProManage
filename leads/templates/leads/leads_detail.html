@@ -32,22 +32,35 @@
                     <td class="border px-4 py-2">{{ lead.mother_name }}</td>
                 </tr>
                 {% endif %}
+                {% if lead.date_of_birth %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Date of Birth</td>
+                    <td class="border px-4 py-2">{{ lead.date_of_birth }}</td>
+                </tr>
+                {% endif %}
+                 {% if lead.gender %}
+                <tr>
+                    <td class="border px-4 py-2 font-semibold">Gender</td>
+                    <td class="border px-4 py-2">{{ lead.get_gender_display }}</td>
+                </tr>
+                {% endif %}
                 {% if lead.email %}
                 <tr>
                     <td class="border px-4 py-2 font-semibold">Email</td>
                     <td class="border px-4 py-2">{{ lead.email }}</td>
                 </tr>
                 {% endif %}
+                
                 {% if lead.address %}
                 <tr>
                     <td class="border px-4 py-2 font-semibold">Address</td>
                     <td class="border px-4 py-2">{{ lead.address }}</td>
                 </tr>
                 {% endif %}
-                {% if lead.date_of_birth %}
+                {% if lead.mobile_no %}
                 <tr>
-                    <td class="border px-4 py-2 font-semibold">Date of Birth</td>
-                    <td class="border px-4 py-2">{{ lead.date_of_birth }}</td>
+                    <td class="border px-4 py-2 font-semibold">Mobile Number</td>
+                    <td class="border px-4 py-2">{{ lead.mobile_no }}</td>
                 </tr>
                 {% endif %}
                 {% if lead.academic_qualification %}
@@ -56,10 +69,10 @@
                     <td class="border px-4 py-2">{{ lead.academic_qualification }}</td>
                 </tr>
                 {% endif %}
-                {% if lead.mobile_no %}
+                {% if lead.courses_interested %}
                 <tr>
-                    <td class="border px-4 py-2 font-semibold">Mobile Number</td>
-                    <td class="border px-4 py-2">{{ lead.mobile_no }}</td>
+                    <td class="border px-4 py-2 font-semibold">Courses Interested</td>
+                    <td class="border px-4 py-2">{{ lead.courses_interested }}</td>
                 </tr>
                 {% endif %}
                 {% if lead.known_languages %}
@@ -70,14 +83,8 @@
                 {% endif %}
                 {% if lead.priority %}
                 <tr>
-                    <td class="border px-4 py-2 font-semibold">Priority</td>
-                    <td class="border px-4 py-2">{{ lead.get_priority_display }}</td>
-                </tr>
-                {% endif %}
-                {% if lead.gender %}
-                <tr>
-                    <td class="border px-4 py-2 font-semibold">Gender</td>
-                    <td class="border px-4 py-2">{{ lead.get_gender_display }}</td>
+                <td class="border px-4 py-2 font-semibold">Priority</td>
+                <td class="border px-4 py-2">{{ lead.priority }}</td>
                 </tr>
                 {% endif %}
                 {% if lead.enquiry_via %}
@@ -86,10 +93,10 @@
                     <td class="border px-4 py-2">{{ lead.enquiry_via }}</td>
                 </tr>
                 {% endif %}
-                {% if lead.courses_interested %}
+                {% if lead.facalty %}
                 <tr>
-                    <td class="border px-4 py-2 font-semibold">Courses Interested</td>
-                    <td class="border px-4 py-2">{{ lead.courses_interested }}</td>
+                    <td class="border px-4 py-2 font-semibold">Facatly Name</td>
+                    <td class="border px-4 py-2">{{ lead.facalty }}</td>
                 </tr>
                 {% endif %}
                 {% if lead.converted_to_admission %}

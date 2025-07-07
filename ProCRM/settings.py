@@ -32,6 +32,7 @@ LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'index'
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,6 +47,8 @@ INSTALLED_APPS = [
     "dashboard",
     "leads",
     "userprofile",
+    'import_export',
+    # 'fees'
 ]
 
 MIDDLEWARE = [
@@ -114,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Kolkata"
 
 USE_I18N = True
 

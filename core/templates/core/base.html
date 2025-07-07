@@ -1,51 +1,55 @@
 <!doctype html>
 <html>
     <head>
-        
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
 
-        <script src = "https://cdn.tailwindcss.com"></script>
-
-        <title>{%block title %}{%endblock%}</title>
-       <link rel="icon" type="image/x-icon" href="C:\Users\CHAITANYA\OneDrive\Desktop\CRM Pro\Extra Templates\iso logo.png_page-0001.png">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="Extra Templates\iso logo.png_page-0001.png">
     </head>
-    <body>
-        <nav class = "py-6 px-6 flex justify-between bg-teal-500">
-            <a href = "Extra Templates\iso logo.png_page-0001.png" class = "text-lg font-bold text-gray-800">Netleap ProManage</a>
-        
-            <div class = "space-x-4">
-                <a href = "{% url 'about' %}" class = "text-lg font-bold text-white">About</a>
-                {% if request.user.is_authenticated %}
-                    <a href = "{% url 'dashboard' %}" class = "py-4 px-6 bg-teal-600 rounded-xl text-lg font-bold text-white">Dashboard</a>
-                    
-                    <a href = "{% url 'leads_list' %}" class = "py-4 px-6 bg-teal-600 rounded-xl text-lg font-bold text-white">Enquiries</a>
-                    <a href = "{% url 'admission_list' %}" class = "py-4 px-6 bg-teal-600 rounded-xl text-lg font-bold text-white">Admissions</a>
-                    <a href = "{% url 'logout' %}" class = "py-4 px-6 bg-red-600 rounded-xl text-lg font-bold text-white">Log out</a>
-                {% else %}
-                    <a href = "{% url 'login' %}" class = "py-4 px-6 bg-teal-600 rounded-xl text-lg font-bold text-white">Log in</a>
-                    <a href = "{% url 'signup' %}" class = "py-4 px-6 bg-teal-300 rounded-xl text-lg font-bold text-white">Sign up</a>
-                {% endif %}
 
+    <!-- Add Tailwind layout classes here -->
+    <body class="min-h-screen flex flex-col">
+
+        <!-- Navigation -->
+        <nav class="py-6 px-6 flex justify-between bg-teal-500">
+            <a href="Extra Templates\iso logo.png_page-0001.png" class="text-lg font-bold text-gray-800">Netleap ProManage</a>
+            <div class="space-x-4">
+                <a href="{% url 'about' %}" class="text-lg font-bold text-white">About</a>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'dashboard' %}" class="py-4 px-6 bg-teal-600 rounded-xl text-lg font-bold text-white">Dashboard</a>
+                    <a href="{% url 'leads_list' %}" class="py-4 px-6 bg-teal-600 rounded-xl text-lg font-bold text-white">Enquiries</a>
+                    <a href="{% url 'admission_list' %}" class="py-4 px-6 bg-teal-600 rounded-xl text-lg font-bold text-white">Admissions</a>
+                    <a href="{% url 'logout' %}" class="py-4 px-6 bg-red-600 rounded-xl text-lg font-bold text-white">Log out</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="py-4 px-6 bg-teal-600 rounded-xl text-lg font-bold text-white">Log in</a>
+                    <a href="{% url 'signup' %}" class="py-4 px-6 bg-teal-300 rounded-xl text-lg font-bold text-white">Sign up</a>
+                {% endif %}
             </div>   
         </nav>    
 
+        <!-- Flash messages -->
         {% if messages %}
             <div class="py-6 px-6">
                 {% for message in messages %}
-                    <div class = "py-4 px-4 bg-teal-300 text-white rounded-xl">
+                    <div class="py-4 px-4 bg-teal-300 text-white rounded-xl">
                         {{ message }}
                     </div>
                 {% endfor %}
             </div>
         {% endif %}
 
+        <!-- Main content -->
+        <main class="flex-grow">
+            {% block content %}
+            {% endblock %}
+        </main>
 
-        {%block content %}
-        {%endblock%}
-
+        <!-- Footer -->
         <footer class="py-8 text-center bg-gray-200">
-                <p class="text-xs text-gray-700">Copyright (c) NetLeap IT Solutions </p>
+            <p class="text-xs text-gray-700">Copyright (c) NetLeap IT Solutions</p>
+        </footer>
+
     </body>
-            
 </html>

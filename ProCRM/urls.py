@@ -23,6 +23,7 @@ from userprofile.views import signup,logout_view
 
 urlpatterns = [
     path('', index, name = 'index'),
+    # path('fees/', include('fees.urls')),
     path('dashboard/leads/', include('leads.urls')),
     path('dashboard/admission/', include('admission.urls')),
     path('dashboard/',include('dashboard.urls')),
