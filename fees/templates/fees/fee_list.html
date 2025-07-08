@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<div class="max-w-7xl mx-auto mt-8 ">
+  <h2 class="text-2xl font-bold mb-6 text-center text-blue-700" style="color: black;font-size: 30px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">All Fees</h2>
+  <div class="overflow-x-auto rounded-lg shadow-lg bg-white ">
+    <table class="min-w-full divide-y divide-gray-200 text-center border border-black">
+      <thead class="bg-teal-500 text-white">
+        <tr class="border border-black">
+          <th class="px-4 py-2 border border-black">Student</th>
+          <th class="px-4 py-2 border border-black">Course</th>
+          <th class="px-4 py-2 border border-black">Total Fee</th>
+          <th class="px-4 py-2 border border-black">Discount</th>
+          <th class="px-4 py-2 border border-black">Paid</th>
+          <th class="px-4 py-2 border border-black">Due</th>
+          <th class="px-4 py-2 border border-black">Date</th>
+          <th class="px-4 py-2 border border-black">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-100 text-center">
+        {% for fee in fees %}
+        <tr class="hover:bg-blue-50 transition">
+          <td class="px-4 py-2 border border-black">{{ fee.student_name }}</td>
+          <td class="px-4 py-2 border border-black">{{ fee.course_name }}</td>
+          <td class="px-4 py-2 border border-black">{{ fee.total_fee }}</td>
+          <td class="px-4 py-2 border border-black">{{ fee.discount }}</td>
+          <td class="px-4 py-2 border border-black">{{ fee.paid_fee }}</td>
+          <td class="px-4 py-2 border border-black">{{ fee.due_fee }}</td>
+          <td class="px-4 py-2 border border-black">{{ fee.payment_date }}</td>
+          <td class="px-4 py-2 text-center">
+            <a href="{% url 'edit_fee' fee.id %}" class="inline-block bg-yellow-400 hover:bg-blue-600 text-white font-semibold px-3 py-1 rounded mr-2">Edit</a>
+            <form action="{% url 'delete_fee' fee.id %}" method="post" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-3 py-1 rounded" onclick="return confirm('Are you sure you want to delete this fee?');">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="8" class="text-center py-4 text-gray-500">No fees found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="mt-6 text-center">
+    <button><a href="{% url 'add_fee' %}"  type="button" class="btn btn-outline-success">Add New Fee</a></button>
+
+  </div>
+</div>
+{% endblock %}

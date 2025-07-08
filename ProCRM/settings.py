@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     "leads",
     "userprofile",
     'import_export',
-    # 'fees'
+    'fees'
 ]
 
 MIDDLEWARE = [
