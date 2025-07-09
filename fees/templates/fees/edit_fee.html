@@ -31,14 +31,17 @@
 <script>
 function calculateDueFee() {
   const total = parseFloat(document.getElementById('id_total_fee').value) || 0;
-  const discount = parseFloat(document.getElementById('id_discount').value) || 0;
+  const discountPercent = parseFloat(document.getElementById('id_discount').value) || 0;
   const paid = parseFloat(document.getElementById('id_paid_fee').value) || 0;
-  const due = total - discount - paid;
+  const discountAmount = (total * discountPercent) / 100;
+  const due = total - discountAmount - paid;
   document.getElementById('due_fee').value = due >= 0 ? due.toFixed(2) : 0;
 }
 document.getElementById('id_total_fee').addEventListener('input', calculateDueFee);
 document.getElementById('id_discount').addEventListener('input', calculateDueFee);
 document.getElementById('id_paid_fee').addEventListener('input', calculateDueFee);
-window.addEventListener('DOMContentLoaded', calculateDueFee);
+window.addEventListener('DOMContentLoaded', function() {
+  calculateDueFee();
+});
 </script>
 {% endblock %}
